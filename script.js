@@ -125,8 +125,35 @@ function renderCart() {
     }
 }
 
+function initCartButtons() {
+    document.querySelectorAll('.cart').forEach(btn => {
+        const link = btn.closest('a');
+        if (link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pro = this.closest('.pro');
+                if (pro) {
+                    const img = pro.querySelector('img').src;
+                    const imgName = img.split('/').pop();
+                    const nameEl = pro.querySelector('h5') || pro.querySelector('h4').previousElementSibling;
+                    const name = nameEl ? (nameEl.textContent || 'Product') : 'Product';
+                    const priceText = pro.querySelector('h4').textContent.replace('$', '');
+                    const price = parseFloat(priceText) || 0;
+                    const id = 'prod_' + imgName.substring(0, 10) + Math.floor(price);
+                    let imgPath = imgName;
+                    if (!imgName.startsWith('images/') && !imgName.startsWith('shopimages/')) {
+                        imgPath = 'images/' + imgName;
+                    }
+                    addToCart(id, name, price, imgPath);
+                }
+            });
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
+    initCartButtons();
     if (document.querySelector('#cart-items')) {
         renderCart();
     }
