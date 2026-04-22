@@ -80,7 +80,7 @@ function getCartTotal() {
 }
 
 function renderCart() {
-    const tbody = document.querySelector('#cart tbody');
+    const tbody = document.querySelector('#cart-items');
     if (!tbody) return;
     
     const cart = getCart();
@@ -94,8 +94,8 @@ function renderCart() {
     
     tbody.innerHTML = cart.map(item => `
         <tr>
-            <td><a href="#" onclick="removeFromCart('${item.id}'); return false;"><i class="far fa-times-circle"></i></a></td>
-            <td><img src="${item.image}" alt="${item.name}"></td>
+            <td><a href="#" onclick="removeFromCart('${item.id}'); return false;"><i class="far fa-times-circle" style="color:#e74c3c; font-size:20px; text-decoration:none;"></i></a></td>
+            <td><img src="${item.image}" alt="${item.name}" style="width:70px;"></td>
             <td>${item.name}</td>
             <td>$${item.price.toFixed(2)}</td>
             <td><input style="width:75px; height:30px" type="number" value="${item.quantity}" onchange="updateQuantity('${item.id}', this.value)"></td>
@@ -127,7 +127,7 @@ function renderCart() {
 
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
-    if (document.querySelector('#cart tbody')) {
+    if (document.querySelector('#cart-items')) {
         renderCart();
     }
 });
