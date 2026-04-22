@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodle LMS</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+header{
+    background:#f98012;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    margin:0 15px;
+    font-size:16px;
+}
+
+.login-btn{
+    background:white;
+    color:#f98012;
+    padding:8px 18px;
+    border-radius:5px;
+    font-weight:bold;
+}
+
+/* Hero Section */
+.hero{
+    background:url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+    background-size:cover;
+    background-position:center;
+    height:350px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:40px;
+}
+
+/* Categories */
+.categories{
+    padding:50px;
+    text-align:center;
+}
+
+.course-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+
+.course{
+    border:1px solid #ddd;
+    padding:20px;
+    border-radius:8px;
+}
+
+.course:hover{
+    background:#f5f5f5;
+}
+
+/* Footer */
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">MOODLE</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Courses</a>
+<a href="#">Dashboard</a>
+<a href="#">About</a>
+</nav>
+
+<a href="#" class="login-btn">Login</a>
+</header>
+
+
+<section class="hero">
+<div>
+<h1>Welcome to Moodle LMS</h1>
+<p>Learn anytime, anywhere</p>
+</div>
+</section>
+
+
+<section class="categories">
+
+<h2>Course Categories</h2>
+
+<div class="course-grid">
+
+<div class="course">
+<h3>Computer Science</h3>
+<p>Programming, Networking and Security</p>
+</div>
+
+<div class="course">
+<h3>Business</h3>
+<p>Management and Entrepreneurship</p>
+</div>
+
+<div class="course">
+<h3>Mathematics</h3>
+<p>Algebra, Calculus and Statistics</p>
+</div>
+
+<div class="course">
+<h3>Multimedia</h3>
+<p>Graphics, Animation and Video</p>
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+<p>© 2026 Moodle LMS | All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
