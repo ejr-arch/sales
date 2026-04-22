@@ -3,6 +3,111 @@ const close=document.getElementById('close');
 const nav=document.getElementById('navbar');
 const news=document.getElementById('sign-button');
 
+function isLoggedIn() {
+    return localStorage.getItem('isLoggedIn') === 'true';
+}
+
+function getCurrentUser() {
+    return localStorage.getItem('currentUser') || null;
+}
+
+function login(username, password) {
+    if (username === 'darius' && password === 'password') {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUser', username);
+        updateLoginUI();
+        return true;
+    }
+    return false;
+}
+
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('cart');
+    updateLoginUI();
+    window.location.href = 'index.html';
+}
+
+function updateLoginUI() {
+    const loginLink = document.getElementById('login-link');
+    if (!loginLink) return;
+    
+    if (isLoggedIn()) {
+        loginLink.innerHTML = '<a href="#" id="logout-btn">Logout</a>';
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+    } else {
+        loginLink.innerHTML = '<a href="#" id="open-login">Login</a>';
+        document.getElementById('open-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            showLoginModal();
+        });
+    }
+}
+
+function showLoginModal() {
+    let modal = document.getElementById('login-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'login-modal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <p id="login-error" style="color:red; display:none; margin-bottom:10px;">Invalid username or password</p>
+                    <button type="submit" class="normal">Login</button>
+                </form>
+                <p style="margin-top:15px; font-size:13px; color:#666;">Demo: username "darius", password "password"</p>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        modal.querySelector('.close-modal').addEventListener('click', hideLoginModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) hideLoginModal();
+        });
+        
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            if (login(username, password)) {
+                hideLoginModal();
+                alert('Login successful!');
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        });
+    }
+    modal.style.display = 'flex';
+}
+
+function hideLoginModal() {
+    const modal = document.getElementById('login-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+function requireLogin(action) {
+    if (!isLoggedIn()) {
+        showLoginModal();
+        return false;
+    }
+    return true;
+}
+
 
 
 if(bar){
@@ -46,6 +151,9 @@ function updateCartCount() {
 }
 
 function addToCart(id, name, price, image) {
+    if (!requireLogin('add to cart')) {
+        return;
+    }
     const cart = getCart();
     const existing = cart.find(item => item.id === id);
     if (existing) {
@@ -153,8 +261,15 @@ function initCartButtons() {
 
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
+    updateLoginUI();
     initCartButtons();
     if (document.querySelector('#cart-items')) {
         renderCart();
     }
+    document.querySelectorAll('#open-login, #open-login-mobile').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showLoginModal();
+        });
+    });
 });

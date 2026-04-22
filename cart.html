@@ -118,5 +118,13 @@
                 </div>
             </footer>
         <script src="script.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                if (!isLoggedIn()) {
+                    showLoginModal();
+                }
+                renderCart();
+            });
+        </script>
     </body>
 </html>

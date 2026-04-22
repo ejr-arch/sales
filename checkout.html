@@ -218,6 +218,10 @@
             }
             
             document.addEventListener('DOMContentLoaded', () => {
+                if (!isLoggedIn()) {
+                    showLoginModal();
+                    return;
+                }
                 updateCartCount();
                 loadCheckoutItems();
             });
